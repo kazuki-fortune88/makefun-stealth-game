@@ -1,0 +1,59 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #0a0a12; }
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #e8dcc0;
+  display: flex; justify-content: center; align-items: flex-start;
+  min-height: 100vh; padding-top: 12px;
+}
+#stage { position: relative; width: 960px; }
+#game { display: block; width: 960px; height: 640px; background: #14101c;
+  border: 3px solid #6b5a2e; border-radius: 6px;
+  box-shadow: 0 0 60px rgba(212, 175, 55, 0.12); }
+#hud {
+  position: absolute; top: 0; left: 0; width: 960px; height: 44px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 14px;
+  background: linear-gradient(rgba(8, 6, 14, 0.92), rgba(8, 6, 14, 0.55) 80%, transparent);
+  font-size: 15px; letter-spacing: 0.4px; pointer-events: none; z-index: 3;
+}
+#hud-level { color: #d4af37; font-weight: bold; margin-right: 16px; }
+#hud-dossiers { color: #f2e6c8; margin-right: 16px; }
+#hud-coins { color: #c9a227; }
+.hud-mid { display: flex; align-items: center; gap: 10px; }
+#hud-status { font-weight: bold; font-size: 13px; letter-spacing: 2px; }
+#hud-status.unseen { color: #8fd18f; }
+#hud-status.hidden { color: #7fb3d5; }
+#hud-status.suspect { color: #f0c040; }
+#hud-status.chase { color: #ff5a4e; }
+#alert-wrap { width: 170px; height: 10px; border: 1px solid #8a7a4a; border-radius: 5px;
+  background: #1a1420; overflow: hidden; }
+#alert-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #d4af37, #ff5a4e);
+  transition: width 0.15s linear; }
+#hud-score { color: #f2e6c8; font-weight: bold; }
+#hud-help {
+  text-align: center; color: #9a8f74; font-size: 13px; padding: 8px 0 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.screen {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; background: rgba(6, 4, 12, 0.82);
+  border-radius: 6px; padding: 20px;
+}
+.screen.hidden { display: none; }
+.screen h1 {
+  font-size: 52px; letter-spacing: 8px; margin: 0 0 10px; color: #d4af37;
+  text-shadow: 0 0 24px rgba(212, 175, 55, 0.55), 0 2px 0 #4a3a12;
+}
+.screen p { font-size: 17px; line-height: 1.55; color: #e8dcc0; max-width: 640px; }
+.screen .tagline { font-style: italic; }
+.screen .rules { font-size: 15px; color: #c9bd9a; }
+.screen .foot { font-size: 13px; color: #8a7f66; font-family: "Segoe UI", Arial, sans-serif; }
+.screen button {
+  margin-top: 18px; padding: 12px 34px; font-size: 19px; letter-spacing: 2px;
+  font-family: Georgia, serif; color: #14101c; background: #d4af37;
+  border: 2px solid #f2e6c8; border-radius: 4px; cursor: pointer;
+}
+.screen button:hover { background: #f2e6c8; }
+#complete-lines, #win-lines, #caught-lines { white-space: pre-line; }

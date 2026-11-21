@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Midnight Gallery — a stealth game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" width="960" height="640"></canvas>
+  <div id="hud">
+    <div class="hud-left">
+      <span id="hud-level">Gallery I</span>
+      <span id="hud-dossiers">Dossiers 0 / 6</span>
+      <span id="hud-coins">Coins 3</span>
+    </div>
+    <div class="hud-mid">
+      <span id="hud-status">UNSEEN</span>
+      <div id="alert-wrap" title="Alert meter"><div id="alert-fill"></div></div>
+    </div>
+    <div class="hud-right"><span id="hud-score">Score 0</span></div>
+  </div>
+  <div id="hud-help">WASD / arrows — move &nbsp;·&nbsp; Shift — sprint (loud) &nbsp;·&nbsp; C — sneak &nbsp;·&nbsp; Click — throw a coin &nbsp;·&nbsp; M — mute &nbsp;·&nbsp; R — restart level</div>
+  <div id="screen-title" class="screen">
+    <h1>MIDNIGHT GALLERY</h1>
+    <p class="tagline">A stealth game in three galleries. Lift all six dossiers from each hall,<br>
+    slip past the wardens' lamplight, and reach the green exit unseen.</p>
+    <p class="rules">Shadows hide you. Sprinting is loud. A thrown coin turns a warden's head.<br>
+    Locked doors need the brass key. Finish a gallery without ever being chased for a <b>GHOST</b> bonus.</p>
+    <button id="btn-start">Enter the gallery</button>
+    <p class="foot">Original game · canvas &amp; WebAudio only · no network · keyboard + mouse</p>
+  </div>
+  <div id="screen-complete" class="screen hidden">
+    <h1 id="complete-title">GALLERY CLEARED</h1>
+    <p id="complete-lines"></p>
+    <button id="btn-next">Next gallery</button>
+  </div>
+  <div id="screen-caught" class="screen hidden">
+    <h1>CAUGHT!</h1>
+    <p id="caught-lines">A warden's lamp found you. The night guard escorts you out.</p>
+    <button id="btn-retry">Try again</button>
+  </div>
+  <div id="screen-win" class="screen hidden">
+    <h1>THE GALLERY IS YOURS</h1>
+    <p id="win-lines"></p>
+    <p class="foot">All three galleries cleared. Play again to beat your score.</p>
+    <button id="btn-again">Play again</button>
+  </div>
+</div>
+<script src="src/config.js"></script>
+<script src="src/random.js"></script>
+<script src="src/levels.js"></script>
+<script src="src/world.js"></script>
+<script src="src/input.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/player.js"></script>
+<script src="src/guard.js"></script>
+<script src="src/render.js"></script>
+<script src="src/shots.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
