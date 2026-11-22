@@ -1,8 +1,16 @@
 // Midnight Gallery — the entrypoint: hand the game in.
 //
 // What it does, in order:
-//   1. Wipes the output directory and recreates it, so a stale file from an
-//      earlier run can never leak into the entry.
+//   1. Empties the output directory's CONTENTS (stale files from an earlier
+//      run can never leak into the entry) — but never removes the output
+//      directory itself. The grader's /output is a mount point: removing it
+//      throws EBUSY ("Device or resource busy"), which would crash the run
+//      with exit code 1 before any output is written. The kit starter does
+//      the same: it only mkdirSync's the directory.
+//   2. Copies game/ and screenshots/ from this repository into it.
+//   3. Writes /output/dossier.json with buildDossier from the kit's
+//      vendor/makefun-game.ts, so the dossier is byte for byte the one the
+//      gate rebuilds from the same files.
 //   2. Copies game/ and screenshots/ from this repository into it.
 //   3. Writes /output/dossier.json with buildDossier from the kit's
 //      vendor/makefun-game.ts, so the dossier is byte for byte the one the
@@ -12,7 +20,7 @@
 //   MAKEFUN_OUTPUT_DIR=out node main.ts
 // Run it twice: both runs must write the same bytes. The program uses only
 // the Node standard library and the kit's vendored dossier library.
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { buildDossier } from "./vendor/makefun-game.ts";
 
@@ -42,8 +50,11 @@ function main(): void {
   if (!existsSync(shotsDir)) throw new Error("main.ts: screenshots/ is missing from the repository");
   // Guard: never let the output directory be the repository itself.
   if (out === root) throw new Error("main.ts: refusing to write the dossier into the repository root");
-  rmSync(out, { recursive: true, force: true });
+  // Guard: NEVER remove the output directory itself — the grader's /output
+  // is a mount point, and rmSync on a mount point throws EBUSY (exit 1).
+  // Only empty its contents, then copy in the fresh files.
   mkdirSync(out, { recursive: true });
+  for (const entry of readdirSync(out)) rmSync(join(out, entry), { recursive: true, force: true });
   cpSync(gameDir, join(out, "game"), { recursive: true });
   cpSync(shotsDir, join(out, "screenshots"), { recursive: true });
   const dossier = buildDossier(out, {
